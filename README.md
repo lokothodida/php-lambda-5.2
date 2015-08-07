@@ -14,6 +14,7 @@ Either load the global `lambda` function from this project:
 
 ```php
 // Defines global function 'lambda'
+// Usage: lambda($params);
 include 'lambda-global.php';
 ```
 
@@ -21,6 +22,7 @@ Or load the local version into a variable:
 
 ```php
 // Defines local function $lambda
+// Usage: $lambda($params);
 $lambda = include 'lambda-local.php';
 ```
 
@@ -39,7 +41,6 @@ $lambda(array(
 ## Basic usage
 
 ```php
-
 // Define some variables
 $x = 3;
 $y = 4;
@@ -58,7 +59,6 @@ $myClosure(5); // 60
 ## External files
 ### example.php
 ```php
-
 // Define some variables
 $x = 3;
 $y = 4;
@@ -80,4 +80,18 @@ $myClosure(5); // 60
 // Having a separate file allows you to define the function without building
 // your own unweildly string in the 'fn' argument
 return $z * $y * $z;
+```
+
+## Shorthands
+
+```php
+// If $params[0] exists but not $params['fn'], $params['fn'] will take
+// $params[0]'s value:
+$callback = $lambda(array('use' => array('$stuff' => 3), '
+  var_dump($stuff);
+'));
+
+$callback(); // 3
+
+
 ```
