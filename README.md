@@ -13,7 +13,7 @@ reference.
 Either load the global `lambda` function from this project:
 
 ```php
-// Give global function 'lambda'
+// Defines global function 'lambda'
 include 'lambda-global.php';
 ```
 
@@ -34,20 +34,50 @@ $lambda(array(
 ));
 ```
 
-# Usage
+# Examples
+
+## Basic usage
 
 ```php
-$l = include 'lambda-local.php';
 
 // Define some variables
 $x = 3;
 $y = 4;
 
 // Create a closure that uses $x and $y
-$myClosure = $l(array('args' => array('$z'), 'use' => array('$x' => $x, '$y' => $y), '
-  return $z * $y * $z;
-'));
+$myClosure = $lambda(array(
+  'args' => array('$z'),
+  'use'  => array('$x' => $x, '$y' => $y),
+  'fn'   => 'return $z * $y * $z;'
+));
 
 $myClosure(5); // 60
 
+```
+
+## External files
+### example.php
+```php
+
+// Define some variables
+$x = 3;
+$y = 4;
+
+// Create a closure that uses $x and $y
+$myClosure = $lambda(array(
+  'args' => array('$z'),
+  'use'  => array('$x' => $x, '$y' => $y),
+  'fn'   => 'myclosure.php'
+));
+
+$myClosure(5); // 60
+
+```
+
+### myclosure.php
+```php
+<?php
+// Having a separate file allows you to define the function without building
+// your own unweildly string in the 'fn' argument
+return $z * $y * $z;
 ```
